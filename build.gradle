@@ -32,6 +32,3 @@ dependencies {
     implementation "org.apereo.cas:cas-server-support-pm-webflow:${project.'cas.version'}"
 }
 
-test {
-    useJUnitPlatform()
-}
