@@ -11,6 +11,8 @@ import org.apereo.cas.pm.PasswordHistoryService;
 import org.apereo.cas.util.CollectionUtils;
 import org.apereo.cas.util.crypto.CipherExecutor;
 import org.springframework.http.*;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.Serializable;
@@ -41,13 +43,16 @@ public class IpaPasswordManagementService extends BasePasswordManagementService 
         val upc = (UsernamePasswordCredential) credential;
         val headers = new HttpHeaders();
         headers.setAccept(CollectionUtils.wrap(MediaType.APPLICATION_JSON));
-        //headers.put(rest.getFieldNameUser(), CollectionUtils.wrap(upc.getUsername()));
-        //headers.put(rest.getFieldNamePassword(), CollectionUtils.wrap(bean.getPassword()));
-        //headers.put(rest.getFieldNamePasswordOld(), CollectionUtils.wrap(upc.toPassword()));
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
-        val entity = new HttpEntity<>(headers);
+        val body = new LinkedMultiValueMap<>();
+        body.put("user", CollectionUtils.wrap(upc.getUsername()));
+        body.put("old_password", CollectionUtils.wrap(bean.getPassword()));
+        body.put("new_password", CollectionUtils.wrap(upc.getPassword()));
+
+        val entity = new HttpEntity<>(body, headers);
         val result = restTemplate.exchange(rest.getEndpointUrlChange(), HttpMethod.POST, entity, Boolean.class);
         return result.getStatusCodeValue() == HttpStatus.OK.value() && result.hasBody()
-                && Objects.requireNonNull(result.getBody()).booleanValue();
+                && Objects.requireNonNull(result.getBody());
     }
 }
