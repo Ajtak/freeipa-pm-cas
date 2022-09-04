@@ -1,0 +1,37 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+}
+
+group 'cz.klik.ipa_pm_cas'
+version '1.0-SNAPSHOT'
+
+repositories {
+    maven { url "https://build.shibboleth.net/nexus/content/groups/public" }
+
+    jcenter()
+}
+
+dependencies {
+    implementation "org.projectlombok:lombok:1.18.24"
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+
+    implementation "org.json:json:20160810"
+    implementation "net.shibboleth.tool:xmlsectool:3.0.0"
+
+    implementation "org.apereo.cas:cas-server-core-util-api:${project.'cas.version'}"
+    implementation "org.apereo.cas:cas-server-core-webflow:${project.'cas.version'}"
+    implementation "org.apereo.cas:cas-server-core-web-api:${project.'cas.version'}"
+    implementation "org.apereo.cas:cas-server-core-authentication:${project.'cas.version'}"
+    implementation "org.apereo.cas:cas-server-core-authentication-api:${project.'cas.version'}"
+    implementation "org.apereo.cas:cas-server-core-configuration-api:${project.'cas.version'}"
+    implementation "org.apereo.cas:cas-server-core-notifications:${project.'cas.version'}"
+
+    implementation "org.apereo.cas:cas-server-support-pm:${project.'cas.version'}"
+    implementation "org.apereo.cas:cas-server-support-pm-core:${project.'cas.version'}"
+    implementation "org.apereo.cas:cas-server-support-pm-webflow:${project.'cas.version'}"
+}
+
+test {
+    useJUnitPlatform()
+}
