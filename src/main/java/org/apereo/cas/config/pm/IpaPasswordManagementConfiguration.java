@@ -1,6 +1,6 @@
 package org.apereo.cas.config.pm;
 
-import cz.klik.ipa_pm_cas.pm.rest.IpaPasswordManagementService;
+import org.apereo.cas.pm.ipa.IpaPasswordManagementService;
 import org.apereo.cas.configuration.CasConfigurationProperties;
 import org.apereo.cas.pm.PasswordHistoryService;
 import org.apereo.cas.pm.PasswordManagementService;

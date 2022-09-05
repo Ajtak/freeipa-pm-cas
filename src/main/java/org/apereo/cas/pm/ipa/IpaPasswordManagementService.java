@@ -1,4 +1,4 @@
-package org.apereo.cas.pm.rest;
+package org.apereo.cas.pm.ipa;
 
 import lombok.val;
 import org.apache.commons.lang3.StringUtils;
