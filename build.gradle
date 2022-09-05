@@ -36,9 +36,8 @@ dependencies {
     implementation "org.apereo.cas:cas-server-core-authentication-api:${project.'cas.version'}"
     implementation "org.apereo.cas:cas-server-core-configuration-api:${project.'cas.version'}"
     implementation "org.apereo.cas:cas-server-core-notifications:${project.'cas.version'}"
-
     implementation "org.apereo.cas:cas-server-support-pm:${project.'cas.version'}"
+
     implementation "org.apereo.cas:cas-server-support-pm-core:${project.'cas.version'}"
     implementation "org.apereo.cas:cas-server-support-pm-webflow:${project.'cas.version'}"
 }
-

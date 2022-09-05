@@ -1,25 +1,25 @@
 package org.apereo.cas.pm;
 
-import org.apereo.cas.pm.ipa.IpaPasswordManagementService;
-import org.apereo.cas.configuration.CasConfigurationProperties;
-import org.apereo.cas.pm.PasswordHistoryService;
-import org.apereo.cas.pm.PasswordManagementService;
-import org.apereo.cas.util.crypto.CipherExecutor;
-
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.apache.commons.lang3.StringUtils;
+import org.apereo.cas.configuration.CasConfigurationProperties;
+import org.apereo.cas.configuration.features.CasFeatureModule;
+import org.apereo.cas.pm.ipa.IpaPasswordManagementService;
+import org.apereo.cas.util.crypto.CipherExecutor;
+import org.apereo.cas.util.spring.boot.ConditionalOnFeatureEnabled;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.web.client.RestTemplate;
 
-@Configuration(value = "IpaPasswordManagementConfiguration", proxyBeanMethods = false)
+@AutoConfiguration
 @EnableConfigurationProperties(CasConfigurationProperties.class)
+@ConditionalOnFeatureEnabled(feature = CasFeatureModule.FeatureCatalog.PasswordManagement, module = "freeipa")
 @Slf4j
 public class IpaPasswordManagementConfiguration {
 
@@ -42,7 +42,7 @@ public class IpaPasswordManagementConfiguration {
                                                            final CasConfigurationProperties casProperties,
                                                            @Qualifier("passwordManagementCipherExecutor")
                                                            final CipherExecutor passwordManagementCipherExecutor,
-                                                           @Qualifier("passwordHistoryService")
+                                                           @Qualifier(PasswordHistoryService.BEAN_NAME)
                                                            final PasswordHistoryService passwordHistoryService) {
         var pm = casProperties.getAuthn().getPm();
         return new IpaPasswordManagementService(passwordManagementCipherExecutor,
