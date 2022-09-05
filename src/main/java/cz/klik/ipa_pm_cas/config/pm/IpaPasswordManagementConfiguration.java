@@ -17,13 +17,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.web.client.RestTemplate;
 
-@AutoConfiguration
 @Configuration(value = "IpaPasswordManagementConfiguration", proxyBeanMethods = false)
 @EnableConfigurationProperties(CasConfigurationProperties.class)
 @Slf4j
 public class IpaPasswordManagementConfiguration {
 
-    private static RestTemplate buildRestTemplateBuilder(final RestTemplateBuilder restTemplateBuilder,
+    private static RestTemplate buildIpaTemplateBuilder(final RestTemplateBuilder restTemplateBuilder,
                                                          final CasConfigurationProperties casProperties) {
         val pmRest = casProperties.getAuthn().getPm().getRest();
         val username = pmRest.getEndpointUsername();
@@ -36,19 +35,18 @@ public class IpaPasswordManagementConfiguration {
         return restTemplateBuilder.build();
     }
 
-    @SuppressWarnings({"SpringJavaInjectionPointsAutowiringInspection"})
     @RefreshScope(proxyMode = ScopedProxyMode.DEFAULT)
     @Bean
     public PasswordManagementService passwordChangeService(final RestTemplateBuilder restTemplateBuilder,
                                                            final CasConfigurationProperties casProperties,
                                                            @Qualifier("passwordManagementCipherExecutor")
-                                                           final CipherExecutor<java.io.Serializable, String> passwordManagementCipherExecutor,
+                                                           final CipherExecutor passwordManagementCipherExecutor,
                                                            @Qualifier("passwordHistoryService")
                                                            final PasswordHistoryService passwordHistoryService) {
         var pm = casProperties.getAuthn().getPm();
         return new IpaPasswordManagementService(passwordManagementCipherExecutor,
                 casProperties.getServer().getPrefix(),
-                buildRestTemplateBuilder(restTemplateBuilder, casProperties), pm,
+                buildIpaTemplateBuilder(restTemplateBuilder, casProperties), pm,
                 passwordHistoryService);
     }
 }
