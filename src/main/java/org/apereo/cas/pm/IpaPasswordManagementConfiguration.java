@@ -7,7 +7,6 @@ import org.apereo.cas.configuration.CasConfigurationProperties;
 import org.apereo.cas.configuration.features.CasFeatureModule;
 import org.apereo.cas.pm.ipa.IpaPasswordManagementService;
 import org.apereo.cas.util.crypto.CipherExecutor;
-import org.apereo.cas.util.spring.boot.ConditionalOnFeatureEnabled;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -19,7 +18,6 @@ import org.springframework.web.client.RestTemplate;
 
 @AutoConfiguration
 @EnableConfigurationProperties(CasConfigurationProperties.class)
-@ConditionalOnFeatureEnabled(feature = CasFeatureModule.FeatureCatalog.PasswordManagement, module = "freeipa")
 @Slf4j
 public class IpaPasswordManagementConfiguration {
 
