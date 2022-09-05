@@ -15,7 +15,7 @@ repositories {
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            groupId = 'cz.klik.freeipa_pm_cas'
+            groupId = 'org.apereo.cas'
             artifactId = 'library'
             version = '1.1'
         }
