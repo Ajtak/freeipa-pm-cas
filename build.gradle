@@ -3,7 +3,7 @@ plugins {
     id 'maven-publish'
 }
 
-group 'cz.klik.ipa_pm_cas'
+group 'org.apereo.cas'
 version '1.0-SNAPSHOT'
 
 repositories {
@@ -16,8 +16,8 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             groupId = 'org.apereo.cas'
-            artifactId = 'library'
-            version = '1.1'
+            artifactId = 'ipa-pm-cas'
+            version = '1.0'
         }
     }
 }
